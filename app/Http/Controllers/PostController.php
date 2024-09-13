@@ -12,7 +12,7 @@ class PostController extends Controller
      */
     public function index()
     {
-       $post = Post::all();
+       $posts = Post::all();
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -40,15 +40,16 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view("posts.show", ['posts' => $post]);
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Post $post)
     {
-        //
+        return view("posts.edit", ['posts' => $post]);
+        
     }
 
     /**
@@ -56,7 +57,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+        $data['user_id'] = 1;
+       // Post::create($data);
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -64,6 +68,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index');
+
     }
 }
